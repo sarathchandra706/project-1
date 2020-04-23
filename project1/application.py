@@ -25,16 +25,18 @@ def register():
         print("entered")
         mail = request.form['email']
         passw = request.form['password']
-
+        
         try:
             register = User(email = mail, password = passw)
             db.session.add(register)
             db.session.commit()
             print(User.query.all())
-            return render_template("register.html",name=mail)
+            mess = "successfully Registered!!!!!"
+            return render_template("sucess.html", message= mess)
         except:
             error="You have already registered with this email"
             return render_template("register.html",message=error)
+
     return render_template("register.html")
 
 @app.route("/login.html",methods=["GET","POST"])
@@ -44,6 +46,8 @@ def login():
 @app.route("/admin")
 def admin():
     users=User.query.all()
+    users = User.query.order_by(User.time.desc()).all()
+
 
     return render_template ("admin.html",data=users)
 @app.route("/auth", methods=["GET","POST"])
@@ -51,7 +55,7 @@ def auth():
     if request.method=="POST":
         mail = request.form.get("email") # i will get my email entered in the webpage
         passw = request.form.get("password")
-        u = User.query.get(mail)
+        u = User.query.get(mail) 
         #select * from user where email==mail  ===> email,password,timestamp
         if u != None:
             # print (u)
@@ -63,10 +67,13 @@ def auth():
                 session["email"]=mail
                 return render_template("account.html")
             else:
-                return "invalid password"
-        else:
-            return "No account associated with this password"
+                message= "invalid password"
+                return render_template("message.html",message=message)
+             
+        return render_template("sucess.html",message=message)
 
+    return render_template("sucess.html",message=message)
+   
 @app.route("/search",methods=["GET"])
 def search():
     if session["email"] == None:
