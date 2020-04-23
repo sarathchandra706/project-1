@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>ADMIN</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+ 
+</head>
+<style>
+    .table{
+        margin: 5% 5% ;
+    }
+</style>
+<body>
+
+  <h2style="text-align: center;"><u>This is the Admin Page</u></h2>
+            
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Created Time</th>
+      </tr>
+    </thead>
+    <tbody>
+
+        {% for user in data %}
+          <tr>
+            <td>{{user.email}}</td>
+            <td>{{user.password}}</td>
+            <td>{{user.time}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+</body>
+</html>
